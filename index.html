@@ -80,27 +80,38 @@
 		</script>
 	</head>
 	<body>
-		<video id="Video" autoplay="autoplay" audio="muted" width="100%" height ="100%"> </video>
+		<video style="width: 100%;height: auto" autoplay> </video>
+		<img src="">
+		<canvas> </canvas>
 
-<script type="text/javascript">
-if (navigator.getUserMedia) {
-    var video = document.getElementById('Video');
-    video.src = null;
-    navigator.getUserMedia('video', successCallback, errorCallback);
-    //if everything if good then set the source of the video element to the mediastream
-    function successCallback(stream) {
-        video.src = stream;
-    }
-    //If everything isn't ok then say so
-    function errorCallback(error) {
-        alert("An error occurred: [CODE " + error.code + "]");
-    }
-}
-else {
-    //show no support for getUserMedia
-    alert("Native camera is not supported in this browser!");
-}
-</script>
+		<script>
+			var video = document.querySelector('video');
+			var canvas = document.querySelector('canvas');
+			var ctx = canvas.getContext('2d');
+			var localMediaStream = null;
+
+			function snapshot() {
+				if (localMediaStream) {
+					ctx.drawImage(video, 0, 0);
+					// "image/webp" works in Chrome.
+					// Other browsers will fall back to image/png.
+					document.querySelector('img').src = canvas.toDataURL('image/webp');
+				}
+			}
+
+
+			video.addEventListener('click', snapshot, false);
+
+			// Not showing vendor prefixes or code that works cross-browser.
+			navigator.getUserMedia({
+				video : true
+			}, function(stream) {
+				video.src = window.URL.createObjectURL(stream);
+				localMediaStream = stream;
+			}, errorCallback);
+			
+			
+		</script>
 		
 	</body>
 </html>
