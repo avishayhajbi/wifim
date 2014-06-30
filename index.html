@@ -120,7 +120,7 @@
 			var canvas = document.querySelector('canvas');
 			var ctx = canvas.getContext('2d');
 			var localMediaStream = null;
-			var pic = document.querySelector('overlay');
+			//var pic = document.querySelector('overlay');
 			function snapshot() {
 				if (localMediaStream) {
 					ctx.drawImage(video, 0, 0);
@@ -132,7 +132,7 @@
 
 
 			video.addEventListener('click', snapshot, false);
-			pic.addEventListener('click', snapshot, false);
+			//pic.addEventListener('click', snapshot, false);
 			// Not showing vendor prefixes or code that works cross-browser.
 			navigator.getUserMedia({
 				video : true
