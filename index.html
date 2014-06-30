@@ -109,18 +109,18 @@
 			}
 		</style>
 		<div id="main_container">
-			<div id="overlay"></div>
-			<video id="video" autoplay></video>
+			<div id="overlay"> </div>
+			<video id="video" autoplay> </video>
 		</div>
 		<img src="">
-		<canvas></canvas>
+		<canvas> </canvas>
 
 		<script>
 			var video = document.querySelector('video');
 			var canvas = document.querySelector('canvas');
 			var ctx = canvas.getContext('2d');
 			var localMediaStream = null;
-
+			var pic = document.querySelector('overlay');
 			function snapshot() {
 				if (localMediaStream) {
 					ctx.drawImage(video, 0, 0);
@@ -132,7 +132,7 @@
 
 
 			video.addEventListener('click', snapshot, false);
-
+			pic.addEventListener('click', snapshot, false);
 			// Not showing vendor prefixes or code that works cross-browser.
 			navigator.getUserMedia({
 				video : true
@@ -142,7 +142,7 @@
 			}, errorCallback);
 			$("#overlay").css('width', $(window).width() + "px");
 			$("#overlay").css('height', $(window).height() + "px");
-			$("#overlay").css('background-size', $(window).width() + "px "+$(window).height()-20 + "px");
+			$("#overlay").css('background-size', $(window).width() + "px "+$(window).height()-18 + "px");
 			$("#video").css('width', $(window).width() + "px");
 			$("#video").css('height', $(window).height() + "px");
 		</script>
