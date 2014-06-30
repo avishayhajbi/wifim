@@ -57,12 +57,16 @@
 				var audioSource = audioSelect.value;
 				var videoSource = videoSelect.value;
 				var constraints = {
-				  audio: {
-				    optional: [{sourceId: audioSource}]
-				  },
-				  video: {
-				    optional: [{sourceId: videoSource}]
-				  }
+					audio : {
+						optional : [{
+							sourceId : audioSource
+						}]
+					},
+					video : {
+						optional : [{
+							sourceId : videoSource
+						}]
+					}
 				};
 				navigator.getUserMedia(constraints, successCallback, errorCallback);
 			}
@@ -76,9 +80,18 @@
 		</script>
 	</head>
 	<body>
-		<video style="width: 100%;height: auto" autoplay></video>
+		<style>
+			#main_container { float: left; position: relative; left:0; top:0; }
+			#video { position: absolute; left: 0px; top: 0px; min-height: auto; min-width: 100%; z-index: 9997;}
+			#overlay { position: absolute;display: inline-block; left: 0px; top: 0px; height: 480px; width: 640px;z-index: 9998;background-image: url("background.png");
+			background-size: 640px 480px; background-position: center; }
+		</style>
+		<div id="main_container">
+			<div id="overlay"> </div>
+			<video id="video" autoplay> </video>
+		</div>
 		<img src="">
-		<canvas></canvas>
+		<canvas> </canvas>
 
 		<script>
 			var video = document.querySelector('video');
@@ -108,7 +121,6 @@
 
 		</script>
 		<div id='container'>
-
 
 		</div>
 	</body>
