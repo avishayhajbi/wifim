@@ -57,18 +57,12 @@
 				var audioSource = audioSelect.value;
 				var videoSource = videoSelect.value;
 				var constraints = {
-					audio : {
-						optional : [{
-							sourceId : audioSource
-						}]
-					},
-					video : {
-						optional : [{
-							sourceId : videoSource,
-							facingMode: "environment"
-							//sourceId : videoSource,
-						}]
-					}
+				  audio: {
+				    optional: [{sourceId: audioSource}]
+				  },
+				  video: {
+				    optional: [{sourceId: videoSource}]
+				  }
 				};
 				navigator.getUserMedia(constraints, successCallback, errorCallback);
 			}
