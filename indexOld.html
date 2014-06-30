@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Capture Photo</title>
+
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+		<link rel="stylesheet" href="css/index-index.css" />
+		<script type="text/javascript" charset="utf-8">
+			var videoElement = document.querySelector("video");
+			var audioSelect = document.querySelector("select#audioSource");
+			var videoSelect = document.querySelector("select#videoSource");
+			var startButton = document.querySelector("button#start");
+
+			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+			function gotSources(sourceInfos) {
+				for (var i = 0; i != sourceInfos.length; ++i) {
+					var sourceInfo = sourceInfos[i];
+					var option = document.createElement("option");
+					option.value = sourceInfo.id;
+					if (sourceInfo.kind === 'audio') {
+						option.text = sourceInfo.label || 'microphone ' + (audioSelect.length + 1);
+						audioSelect.appendChild(option);
+					} else if (sourceInfo.kind === 'video') {
+						option.text = sourceInfo.label || 'camera ' + (videoSelect.length + 1);
+						videoSelect.appendChild(option);
+					} else {
+						console.log('Some other kind of source: ', sourceInfo);
+					}
+				}
+			}
+
+			if ( typeof MediaStreamTrack === 'undefined') {
+				alert('This browser does not support MediaStreamTrack.\n\nTry Chrome Canary.');
+			} else {
+				MediaStreamTrack.getSources(gotSources);
+			}
+
+			function successCallback(stream) {
+				window.stream = stream;
+				// make stream available to console
+				videoElement.src = window.URL.createObjectURL(stream);
+				videoElement.play();
+			}
+
+			function errorCallback(error) {
+				console.log("navigator.getUserMedia error: ", error);
+			}
+
+			function start() {
+				if (!!window.stream) {
+					videoElement.src = null;
+					window.stream.stop();
+				}
+				var audioSource = audioSelect.value;
+				var videoSource = videoSelect.value;
+				var constraints = {
+					audio : {
+						optional : [{
+							sourceId : audioSource
+						}]
+					},
+					video : {
+						optional : [{
+							sourceId : videoSource
+						}]
+					}
+				};
+				navigator.getUserMedia(constraints, successCallback, errorCallback);
+			}
+
+
+			audioSelect.onchange = start;
+			videoSelect.onchange = start;
+
+			start();
+
+		</script>
+	</head>
+	<body>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#main_container {
+				float: left;
+				position: relative;
+				left: 0;
+				top: 0;
+			}
+			#video {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				z-index: 9997;
+			}
+			#overlay {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				z-index: 9998;
+				background-image: url("background.png");
+				
+				background-position: center;
+				background-repeat: no-repeat
+			}
+		</style>
+		<div id="main_container">
+			<div id="overlay"> </div>
+			<video id="video" autoplay > </video>
+		</div>
+		<img src="">
+		<canvas> </canvas>
+		<script>
+			var video = document.querySelector('video');
+			var canvas = document.querySelector('canvas');
+			var ctx = canvas.getContext('2d');
+			var localMediaStream = null;
+			//var pic = document.querySelector('overlay');
+			function snapshot() {
+				if (localMediaStream) {
+					ctx.drawImage(video, 0, 0);
+					// "image/webp" works in Chrome.
+					// Other browsers will fall back to image/png.
+					document.querySelector('img').src = canvas.toDataURL('image/webp');
+				}
+			}
+
+			
+			video.addEventListener('click', snapshot, false);
+			// var cw = Math.floor(canvas.clientWidth / 100);
+		    // var ch = Math.floor(canvas.clientHeight / 100);
+		    // canvas.width = cw;
+		    // canvas.height = ch;
+		    // draw(video,ctx,cw,ch);
+			// video.addEventListener('play', function(){
+		        // draw(this,ctx,cw,ch);
+		    // },false);
+		    // function draw(v,c,w,h) {
+			    // if(v.paused || v.ended) return false;
+			    // c.drawImage(v,0,0,w,h);
+			    // setTimeout(draw,20,v,c,w,h);
+			// }
+			//pic.addEventListener('click', snapshot, false);
+			// Not showing vendor prefixes or code that works cross-browser.
+			navigator.getUserMedia({
+				video : true
+			}, function(stream) {
+				video.src = window.URL.createObjectURL(stream);
+				localMediaStream = stream;
+				getData(stream);
+			}, errorCallback);
+			function getData(stream){
+				console.log(stream);
+			}
+			$("#overlay").css('width', $(window).width() + "px");
+			$("#overlay").css('height', $(window).height() + "px");
+			$("#overlay").css('background-size', $(window).width() + "px "+$(window).height()-18 + "px");
+			$("#video").css('width', $(window).width() + "px");
+			$("#video").css('height', $(window).height() + "px");
+		</script>
+		<br>
+	</body>
+</html>
+
