@@ -98,8 +98,8 @@
 			grey.addEventListener('click', function() {
 				$(".ui-page-theme-a .ui-btn").css("background-color","green");
 				image = document.getElementById('image');
-				image.width=w;
-				image.height=h;
+				image.width=$(window).width();
+				image.height=$(window).height();
 				greyscale = !greyscale;
 			}, false);
 
