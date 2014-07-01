@@ -117,10 +117,10 @@
 					g+= data[i+1];
 					b+= data[i+2];
 				}
-				if(b>g){
+				if(b>(g*0.5)){
 					document.getElementById('image').style.display="inline";
 				}
-				else if (b<g){
+				else{
 					document.getElementById('image').style.display="none";
 				}
 				//console.log("r:"+r+" g:"+g+" b:"+b);
