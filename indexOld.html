@@ -103,7 +103,6 @@
 				top: 0px;
 				z-index: 9998;
 				background-image: url("background.png");
-				
 				background-position: center;
 				background-repeat: no-repeat
 			}
@@ -129,23 +128,7 @@
 				}
 			}
 
-			
 			video.addEventListener('click', snapshot, false);
-			// var cw = Math.floor(canvas.clientWidth / 100);
-		    // var ch = Math.floor(canvas.clientHeight / 100);
-		    // canvas.width = cw;
-		    // canvas.height = ch;
-		    // draw(video,ctx,cw,ch);
-			// video.addEventListener('play', function(){
-		        // draw(this,ctx,cw,ch);
-		    // },false);
-		    // function draw(v,c,w,h) {
-			    // if(v.paused || v.ended) return false;
-			    // c.drawImage(v,0,0,w,h);
-			    // setTimeout(draw,20,v,c,w,h);
-			// }
-			//pic.addEventListener('click', snapshot, false);
-			// Not showing vendor prefixes or code that works cross-browser.
 			navigator.getUserMedia({
 				video : true
 			}, function(stream) {
