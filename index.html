@@ -78,8 +78,6 @@
 					c.setAttribute('width', w);
 					c.setAttribute('height', h);
 					image = document.getElementById('image');
-					image.width=w;
-					image.height=h;
 					// Reverse the canvas image
 					con.translate(w, 0);
 					con.scale(-1, 1);
@@ -99,6 +97,9 @@
 			}, false);
 			grey.addEventListener('click', function() {
 				$(".ui-page-theme-a .ui-btn").css("background-color","green");
+				image = document.getElementById('image');
+				image.width=w;
+				image.height=h;
 				greyscale = !greyscale;
 			}, false);
 
