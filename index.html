@@ -115,11 +115,11 @@
 					g+= data[i+1];
 					b+= data[i+2];
 				}
-				if(b<g){
+				if(b>g){
 					//document.getElementById('image').style.display="inline";
 					document.getElementById('image').src="blue.png";
 				}
-				else{
+				else if(b<g){
 					//document.getElementById('image').style.display="none";
 					document.getElementById('image').src="green.png";
 				}
