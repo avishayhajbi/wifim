@@ -41,6 +41,8 @@
 		<button id='grey'>
 			Activate wifim
 		</button>
+		<img id="snapshot" src="#" style="width: 150px;height:100px" />	
+		<img id="snapshotBackground" src="#" style="width: 150px;height:100px" />	
 			<script type="text/javascript" charset="utf-8">
 			window.addEventListener('DOMContentLoaded', function() {
 				var v = document.getElementById('v');
@@ -116,15 +118,21 @@
 					b+= data[i+2];
 				}
 				if(b>g){
-					//document.getElementById('image').style.display="inline";
 					document.getElementById('image').src="blue.png";
 				}
 				else if(g>(b*0.9)){
-					//document.getElementById('image').style.display="none";
 					document.getElementById('image').src="green.png";
 				}
-			
+				// con.globalAlpha = 0.5;
+				// con.drawImage(document.getElementById("image"), 0, 0, $(window).width(), $(window).height());
+				// con.globalAlpha = 1;
 			};
+			document.getElementById('image').addEventListener('click', snapshot, false);
+			function snapshot(){
+				console.log("snapshot");
+				document.getElementById('snapshot').src = c.toDataURL('image/webp');
+				document.getElementById('snapshotBackground').src = document.getElementById('image').src;
+			}
 		</script>
 	</body>
 </html>
