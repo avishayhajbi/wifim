@@ -44,8 +44,8 @@
 		<button id='grey'>
 			Activate wifim
 		</button>
-		<img id="snapshot" src="#" style="width: 250px;height:200px;opacity: 1;" />	
-		<img id="snapshotBackground" src="#" style="width: 250px;height:200px;opacity: 1;"/>	
+		<img id="snapshot" src="#" style="width: 250px;height:180px;opacity: 1;" />	
+		<img id="snapshotBackground" src="#" style="width: 250px;height:180px;opacity: 1;"/>	
 			<script type="text/javascript" charset="utf-8">
 			window.addEventListener('DOMContentLoaded', function() {
 				var v = document.getElementById('v');
@@ -93,10 +93,11 @@
 					if (v.paused || v.ended)
 						return;
 					con.fillRect(0, 0, w, h);
+					// display the stream inside the canvas
 					con.drawImage(v, 0, 0, w, h);
 					if (greyscale)
 						goingGrey();
-				}, 33);
+				}, 3);
 			}, false);
 			grey.addEventListener('click', function() {
 				$(".ui-page-theme-a .ui-btn").css("background-color","green");
@@ -105,30 +106,37 @@
 				image.style.height=$(window).height();
 				greyscale = !greyscale;
 			}, false);
-
+			
 			var goingGrey = function() {
 				var imageData = con.getImageData(0, 0, w, h);
 				var data = imageData.data;
-				//console.log("start");
+				if (check == 1)
+				{
+					//console.log(data);
+					check=0;
+				}
+				//console.log($(window).width());// 1007 * 624 2521528
+				//console.log(data.length);
 				var r =0 , g=0 ,b=0;
-				for (var i = 0; i < data.length; i += 4) {
-					//var bright = 0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2];
-					//data[i] = bright;
-					//data[i + 1] = bright;
-					//data[i + 2] = bright;
+				for (var i = data.length/2; i < data.length; i += 4) {
+					
 					r+= data[i];
 					g+= data[i+1];
 					b+= data[i+2];
+					if (data[i+1]>data[i] && data[i+1]>data[i+2]){
+						document.getElementById('image').src="green.png";
+						break;
+					}
+					else{document.getElementById('image').src="blue.png";}
+					
 				}
-				if(b>g){
-					document.getElementById('image').src="blue.png";
-				}
-				else if(g>(b*0.9)){
+				
+				if(g>b*0.8){
 					document.getElementById('image').src="green.png";
 				}
-				// con.globalAlpha = 0.5;
-				// con.drawImage(document.getElementById("image"), 0, 0, $(window).width(), $(window).height());
-				// con.globalAlpha = 1;
+				else {
+					document.getElementById('image').src="blue.png";
+				}
 			};
 			document.getElementById('image').addEventListener('click', snapshot, false);
 			function snapshot(){
@@ -136,6 +144,7 @@
 				document.getElementById('snapshot').src = c.toDataURL('image/webp');
 				document.getElementById('snapshotBackground').src = document.getElementById('image').src;
 			}
+			var check =1;
 		</script>
 	</body>
 </html>
