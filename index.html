@@ -47,6 +47,8 @@
 		<img id="snapshot" src="#" style="width: 250px;height:180px;opacity: 1;" />	
 		<img id="snapshotBackground" src="#" style="width: 250px;height:180px;opacity: 1;"/>	
 			<script type="text/javascript" charset="utf-8">
+			var counter=1;
+			var ran=0;
 			window.addEventListener('DOMContentLoaded', function() {
 				var v = document.getElementById('v');
 				navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -132,13 +134,34 @@
 					//console.log (i + " " + data.length);
 					
 				}
-				
-				if(g>b*0.7){
-					document.getElementById('image').src="green.png";
-				}
-				else if (b > g){
+				// counter defined 1
+				// ran defined 1
+				if (counter==1){
 					document.getElementById('image').src="blue.png";
 				}
+				if (counter > 0 ){
+					counter++;
+				}
+				if (1900<counter){
+					counter=-1;
+					document.getElementById('image').src="green.png";
+					//console.log("green");
+				} 
+				if (counter<0){
+					counter = counter+(-1);
+				}
+				if(counter < -3200){
+					counter =1;
+				}
+				
+				//console.log(ran*counter);
+				
+				// if(g>b*0.7){
+					// document.getElementById('image').src="green.png";
+				// }
+				// else if (b > g){
+					// document.getElementById('image').src="blue.png";
+				// }
 			};
 			document.getElementById('image').addEventListener('click', snapshot, false);
 			function snapshot(){
