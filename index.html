@@ -97,7 +97,7 @@
 					con.drawImage(v, 0, 0, w, h);
 					if (greyscale)
 						goingGrey();
-				},5);
+				},3);
 			}, false);
 			grey.addEventListener('click', function() {
 				$(".ui-page-theme-a .ui-btn").css("background-color","green");
@@ -123,21 +123,22 @@
 					r+= data[i];
 					g+= data[i+1];
 					b+= data[i+2];
-					if (data[i+1]>data[i] && data[i+1]>data[i+2]){
-						document.getElementById('image').src="green.png";
-						break;
-					}
-					else{document.getElementById('image').src="blue.png";}
+					// if (data[i+1]>data[i] && data[i+1]>data[i+2]){
+						// document.getElementById('image').src="green.png";
+						// console.log("green");
+						// break;
+					// }
+					// else{document.getElementById('image').src="blue.png";}
 					//console.log (i + " " + data.length);
 					
 				}
 				
-				/*if(g>b*0.8){
+				if(g>b*0.7){
 					document.getElementById('image').src="green.png";
 				}
-				else {
+				else if (b > g){
 					document.getElementById('image').src="blue.png";
-				}*/
+				}
 			};
 			document.getElementById('image').addEventListener('click', snapshot, false);
 			function snapshot(){
